@@ -46,12 +46,10 @@ if (isset($_GET['id'])) {
         exit("❌ Failed to download valid m3u8 content.");
     }
 
-    // Save to a file named by the channel ID
-    $file_name = $channel_id . ".m3u8";
-    file_put_contents($file_name, $m3u8_content);
-
-    // Redirect to that .m3u8 file
-    header("Location: $file_name");
+    // Serve the M3U8 content directly with the correct headers
+    header('Content-Type: application/vnd.apple.mpegurl');
+    header('Content-Disposition: inline; filename="' . $channel_id . '.m3u8"');
+    echo $m3u8_content;
     exit;
 }
 ?>
